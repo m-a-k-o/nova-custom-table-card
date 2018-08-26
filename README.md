@@ -6,6 +6,7 @@ This will add a simple table card with specified data.
 
 It can be useful as latest order list or latest posts, ...
 
+![Nova Custom Table Card](https://raw.githubusercontent.com/m-a-k-o/nova-custom-table-card/master/screenshot.png)
 
  ## Installation
 
