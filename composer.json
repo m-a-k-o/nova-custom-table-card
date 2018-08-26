@@ -1,0 +1,29 @@
+{
+    "name": "m-a-k-o/custom-table-card",
+    "description": "Nova custom table card. Show your latest data (orders, posts,...) as card or data you prefer.",
+    "keywords": [
+        "laravel",
+        "nova"
+    ],
+    "license": "MIT",
+    "require": {
+        "php": ">=7.1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Mako\\CustomTableCard\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Mako\\CustomTableCard\\CardServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
