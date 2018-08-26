@@ -13,14 +13,17 @@ class CustomTableCard extends Card
      */
     public $width = 'full';
 
+    static $title = '';
+
     static $header = [];
 
     static $data = [];
 
-    public function __construct(array $header, array $data)
+    public function __construct(array $header, array $data, string $title = '')
     {
         static::$header = $header;
         static::$data = $data;
+        static::$title = $title;
     }
 
     /**

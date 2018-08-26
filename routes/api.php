@@ -16,7 +16,8 @@ use Illuminate\Support\Facades\Route;
 
  Route::get('/', function (Request $request) {
      return [
-         'header' => Mako\CustomTableCard\CustomTableCard::$header,
-         'data' => Mako\CustomTableCard\CustomTableCard::$data,
+         'header'   => Mako\CustomTableCard\CustomTableCard::$header,
+         'data'     => Mako\CustomTableCard\CustomTableCard::$data,
+         'title'    => Mako\CustomTableCard\CustomTableCard::$title,
      ];
  });

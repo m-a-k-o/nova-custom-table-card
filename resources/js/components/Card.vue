@@ -1,7 +1,7 @@
 <template>
     <div>
         <card class="flex flex-col">
-          <h1 class="py-6 text-90 font-normal text-2xl text-left pl-4">Latest Orders</h1>
+          <h1 v-if="title" class="py-6 text-90 font-normal text-2xl text-left pl-4">{{ title }}</h1>
           <table cellpadding="0" cellspacing="0" data-testid="resource-table" class="table w-full">
             <thead>
               <tr>
@@ -15,9 +15,9 @@
             </thead>
             <tbody>
               <tr v-for="row in data">
-                <td class="" v-for="column in row.columns">{{ column }}</td>
+                <td v-for="column in row.columns" v-html="column"></td>
                 <td class="td-fit text-right pr-6">
-                  <span>
+                  <span v-if="row.view">
                     <router-link
                         class="cursor-pointer text-70 hover:text-primary mr-3"
                         :to="row.view"
@@ -42,6 +42,7 @@ export default {
       return {
         data: [],
         header: [],
+        title: '',
       }
     },
 
@@ -49,6 +50,7 @@ export default {
         const { data } = await Nova.request().get('/nova-vendor/customtablecard/')
         this.data = data.data
         this.header = data.header
+        this.title = data.title
 
       console.log(this.data)
     },
