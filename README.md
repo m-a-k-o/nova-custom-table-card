@@ -1,8 +1,8 @@
 # Nova Custom Table Card
 
-## Simple Nova Card for Custom Tables 
+## Simple Nova Card for Custom Tables
 
-This will add a simple table card with specified data.
+Simple card table with data of you choice.
 
 It can be useful as latest order list or latest posts, ...
 
@@ -16,7 +16,7 @@ You can install the package in to a Laravel app that uses [Nova](https://nova.la
 composer require m-a-k-o/nova-custom-table-card
 ```
 
-Youy must register the card with NovaServiceProvider.
+You must register the card with NovaServiceProvider.
 
 ```php
 // in app/Providers/NovaServiceProvder.php
@@ -29,13 +29,13 @@ public function cards()
 
         // all the parameters are required
         new \Mako\CustomTableCard\CustomTableCard(
-            array $header, array $data
+            array $header, array $data, string $title
         ),
     ];
 }
 ```
 
-Usage is simple:
+Example of use:
 
 ```php
 // ...
@@ -52,12 +52,37 @@ public function cards()
                 'view' => '/resources/orders/1',
                 'columns' => [1, 'John Doe', '2018-08-28']
               ]
-            ] // data
+            ], // data
+            'Orders' //title
         ),
     ];
 }
 ```
 
-If you don't specify view, show icon will not be visible.
+or:
+
+```php
+// ...
+public function cards()
+{
+    return [
+        // ...
+
+        // all the parameters are required
+        (new \Mako\CustomTableCard\CustomTableCard())
+            ->header(['Id', 'Name', 'Date'])
+            ->data([
+                [
+                    'view' => '/resources/orders/1',
+                    'columns' => [1, 'John Doe', '2018-08-28']
+                ]
+            ])
+            ->title('Orders'),
+        ),
+    ];
+}
+```
+
+Note: If you don't specify view, show icon will not be visible.
 
 
