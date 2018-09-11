@@ -13,17 +13,30 @@ class CustomTableCard extends Card
      */
     public $width = 'full';
 
-    static $title = '';
-
-    static $header = [];
-
-    static $data = [];
-
-    public function __construct(array $header, array $data, string $title = '')
+    public function __construct(array $header = [], array $data = [], string $title = '')
     {
-        static::$header = $header;
-        static::$data = $data;
-        static::$title = $title;
+        parent::__construct();
+
+        $this->withMeta([
+            'header'    =>  $header,
+            'rows'      =>  $data,
+            'title'     =>  $title,
+        ]);
+    }
+
+    public function header(array $header)
+    {
+        return $this->withMeta(['header' => $header]);
+    }
+
+    public function data(array $data)
+    {
+        return $this->withMeta(['rows' => $data]);
+    }
+
+    public function title(string $title)
+    {
+        return $this->withMeta(['title' => $title]);
     }
 
     /**

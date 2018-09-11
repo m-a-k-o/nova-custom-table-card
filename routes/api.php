@@ -13,11 +13,3 @@ use Illuminate\Support\Facades\Route;
 | as many additional routes to this file as your card may require.
 |
 */
-
- Route::get('/', function (Request $request) {
-     return [
-         'header'   => Mako\CustomTableCard\CustomTableCard::$header,
-         'data'     => Mako\CustomTableCard\CustomTableCard::$data,
-         'title'    => Mako\CustomTableCard\CustomTableCard::$title,
-     ];
- });

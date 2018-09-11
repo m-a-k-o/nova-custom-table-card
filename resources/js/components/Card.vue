@@ -14,7 +14,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="row in data">
+              <tr v-for="row in rows">
                 <td v-for="column in row.columns" v-html="column"></td>
                 <td class="td-fit text-right pr-6">
                   <span v-if="row.view">
@@ -40,19 +40,27 @@ export default {
 
     data() {
       return {
-        data: [],
+        rows: [],
         header: [],
         title: '',
       }
     },
 
-    async mounted() {
-        const { data } = await Nova.request().get('/nova-vendor/customtablecard/')
-        this.data = data.data
-        this.header = data.header
-        this.title = data.title
+    mounted() {
+      const { header, rows, title } = this.card
 
-      console.log(this.data)
-    },
+      this.rows = rows
+      this.header = header
+      this.title = title
+    }
+
+    // async mounted() {
+    //     const { data } = await Nova.request().get('/nova-vendor/customtablecard/')
+    //     this.data = data.data
+    //     this.header = data.header
+    //     this.title = data.title
+
+    //   console.log(this.data)
+    // },
 }
 </script>
