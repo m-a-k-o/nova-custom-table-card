@@ -5,9 +5,9 @@
           <table cellpadding="0" cellspacing="0" data-testid="resource-table" class="table w-full">
             <thead>
               <tr>
-                <th class="text-left" v-for="head in header">
+                <th :class="head.class" v-for="head in header">
                   <span class="cursor-pointer inline-flex items-center">
-                    {{ head }}
+                    {{ head.data }}
                   </span>
                 </th>
                 <th></th>
@@ -15,16 +15,15 @@
             </thead>
             <tbody>
               <tr v-for="row in rows">
-                <td v-for="column in row.columns" v-html="column"></td>
+                <td v-for="column in row.columns" :class="column.class" v-html="column.data"></td>
                 <td class="td-fit text-right pr-6">
                   <span v-if="row.view">
                     <router-link
                         class="cursor-pointer text-70 hover:text-primary mr-3"
                         :to="row.view"
-                        :title="__('View')"
-                    >
-                    <icon type="view" width="22" height="18" view-box="0 0 22 16" />
-                  </router-link>
+                        :title="__('View')">
+                      <icon type="view" width="22" height="18" view-box="0 0 22 16" />
+                    </router-link>
                   </span>
                 </td>
               </tr>
