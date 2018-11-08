@@ -5,7 +5,7 @@
           <table cellpadding="0" cellspacing="0" data-testid="resource-table" class="table w-full">
             <thead>
               <tr>
-                <th :class="head.class" v-for="head in header">
+                <th :class="head.class" :id="head.id" v-for="head in header">
                   <span class="cursor-pointer inline-flex items-center">
                     {{ head.data }}
                   </span>
@@ -15,7 +15,7 @@
             </thead>
             <tbody>
               <tr v-for="row in rows">
-                <td v-for="column in row.columns" :class="column.class" v-html="column.data"></td>
+                <td v-for="column in row.columns" :class="column.class" :id="column.id" v-html="column.data"></td>
                 <td class="td-fit text-right pr-6">
                   <span v-if="row.view">
                     <router-link
@@ -52,14 +52,5 @@ export default {
       this.header = header
       this.title = title
     }
-
-    // async mounted() {
-    //     const { data } = await Nova.request().get('/nova-vendor/customtablecard/')
-    //     this.data = data.data
-    //     this.header = data.header
-    //     this.title = data.title
-
-    //   console.log(this.data)
-    // },
 }
 </script>
