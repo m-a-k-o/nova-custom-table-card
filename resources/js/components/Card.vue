@@ -46,11 +46,22 @@ export default {
     },
 
     mounted() {
-      const { header, rows, title } = this.card
+      const { header, rows, title, refresh, uuid } = this.card
 
       this.rows = rows
       this.header = header
       this.title = title
+
+      if (refresh) {
+        setInterval(() => {
+          Nova.request().get('nova-api/cards')
+            .then(({ data }) => {
+              const card = data.find((value) => value.uuid === uuid)
+
+              this.rows = card.rows
+            })
+        }, refresh * 1000)
+      }
     }
 }
 </script>

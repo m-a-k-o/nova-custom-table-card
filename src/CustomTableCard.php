@@ -6,6 +6,8 @@ use Laravel\Nova\Card;
 
 class CustomTableCard extends Card
 {
+    public static $instanceCount = 0;
+
     /**
      * The width of the card (1/3, 1/2, or full).
      *
@@ -16,6 +18,8 @@ class CustomTableCard extends Card
     public function __construct(array $header = [], array $data = [], string $title = '')
     {
         parent::__construct();
+
+        self::$instanceCount++;
 
         $this->withMeta([
             'header'    =>  $this->_convertToArray($header),
@@ -45,6 +49,15 @@ class CustomTableCard extends Card
             ->map(function ($value) {
                 return $value->toArray();
             })->toArray();
+    }
+
+    public function refresh(int $seconds)
+    {
+        return $this->withMeta(['refresh' => $seconds, 'uuid' => self::$instanceCount]);
+    }
+
+    function __destruct() {
+        self::$instanceCount--;
     }
 
     /**

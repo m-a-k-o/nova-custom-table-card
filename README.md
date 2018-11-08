@@ -9,6 +9,7 @@ It can be useful as latest order list or latest posts, ...
 ![Nova Custom Table Card](https://raw.githubusercontent.com/m-a-k-o/nova-custom-table-card/master/screenshot.png)
 
  ## This docs are only for v. 2.*
+ In version 2 added: refresh (reaload), possiblity to add id and classes to cells
 
  ## Installation
 
@@ -93,7 +94,8 @@ public function cards()
                     (new \Mako\CustomTableCard\Table\Cell('201.25'))->class('text-right')->id('price-2')
                 )),
             ])
-            ->title('Orders'),
+            ->title('Orders')
+            ->refresh(5), // If you need refresh your card data (in seconds)
     ];
 }
 ```
