@@ -54,7 +54,7 @@ export default {
 
       if (refresh) {
         setInterval(() => {
-          Nova.request().get('nova-api/cards')
+          Nova.request().get('/nova-api/cards')
             .then(({ data }) => {
               const card = data.find((value) => value.uuid === uuid)
 
