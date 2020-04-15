@@ -25,6 +25,7 @@ class CustomTableCard extends Card
             'header'    =>  $this->_convertToArray($header),
             'rows'      =>  $this->_convertToArray($data),
             'title'     =>  $title,
+            'viewall' => ''
         ]);
     }
 
@@ -41,6 +42,11 @@ class CustomTableCard extends Card
     public function title(string $title)
     {
         return $this->withMeta(['title' => $title]);
+    }
+
+    public function viewall(array $viewall)
+    {
+        return $this->withMeta(['viewall' => $viewall]);
     }
 
     private function _convertToArray(array $data) : array

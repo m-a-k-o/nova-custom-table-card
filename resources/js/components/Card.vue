@@ -30,6 +30,7 @@
             </tbody>
           </table>
         </card>
+        <a v-if="viewall" class="btn btn-default btn-primary mt-1" :href="viewall.link">{{ viewall.label }}</a>
     </div>
 </template>
 
@@ -42,15 +43,17 @@ export default {
         rows: [],
         header: [],
         title: '',
+        viewall: false
       }
     },
 
     mounted() {
-      const { header, rows, title, refresh, uuid } = this.card
+      const { header, rows, title, refresh, uuid, viewall } = this.card
 
-      this.rows = rows
-      this.header = header
-      this.title = title
+      this.rows = rows;
+      this.header = header;
+      this.title = title;
+      this.viewall = viewall;
 
       if (refresh) {
         setInterval(() => {
