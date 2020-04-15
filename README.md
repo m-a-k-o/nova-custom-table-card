@@ -32,7 +32,7 @@ public function cards()
 
         // all the parameters are required excelpt title
         new \Mako\CustomTableCard\CustomTableCard(
-            array $header, array $data, string $title
+            array $header, array $data, string $title, array $viewall
         ),
     ];
 }
@@ -63,7 +63,8 @@ public function cards()
                     (new \Mako\CustomTableCard\Table\Cell('201.25'))->class('text-right')->id('price-2')
                 )),
             ], // data
-            'Orders' //title
+            'Orders,' // title
+            ['label' => 'View All', 'link' => '/resources/orders'], // View All
         ),
     ];
 }
@@ -95,6 +96,7 @@ public function cards()
                 )),
             ])
             ->title('Orders')
+            ->viewall(['label' => 'View All', 'link' => '/resources/orders'])
             ->refresh(5), // If you need refresh your card data (in seconds)
     ];
 }
@@ -121,6 +123,7 @@ class LatestOrders extends \Mako\CustomTableCard\CustomTableCard
 
         $this->title('Latest Orders');
         $this->refresh(5); // If you need refresh your card data (in seconds)
+        $this->viewall(['label' => 'View All', 'link' => '/resources/orders']);
 
         // $orders = Order::all();
         // Data from you model
@@ -161,6 +164,6 @@ protected function cards()
  }
 ```
 
-Note: If you don't specify view, show icon will not be visible.
+Note: If you don't specify view or view all, show icon will not be visible.
 
 

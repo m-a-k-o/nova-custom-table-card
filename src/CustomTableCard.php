@@ -15,7 +15,7 @@ class CustomTableCard extends Card
      */
     public $width = 'full';
 
-    public function __construct(array $header = [], array $data = [], string $title = '')
+    public function __construct(array $header = [], array $data = [], string $title = '', array $viewall = [])
     {
         parent::__construct();
 
@@ -25,7 +25,7 @@ class CustomTableCard extends Card
             'header'    =>  $this->_convertToArray($header),
             'rows'      =>  $this->_convertToArray($data),
             'title'     =>  $title,
-            'viewall' => ''
+            'viewall'   =>  $viewall,
         ]);
     }
 
