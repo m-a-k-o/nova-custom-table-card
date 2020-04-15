@@ -29,8 +29,13 @@
               </tr>
             </tbody>
           </table>
+          <div v-if="viewall" class="bg-20 rounded-b-lg flex justify-between">
+            <div></div>
+            <div>
+              <a v-if="viewall" class="btn btn-link py-3 px-4 text-80" :href="viewall.link">{{ viewall.label }}</a>
+            </div>
+          </div>
         </card>
-        <a v-if="viewall" class="btn btn-default btn-primary mt-1" :href="viewall.link">{{ viewall.label }}</a>
     </div>
 </template>
 
