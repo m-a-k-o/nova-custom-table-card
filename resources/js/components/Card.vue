@@ -10,13 +10,13 @@
                     {{ head.data }}
                   </span>
                 </th>
-                <th></th>
+                <th v-if="hasViewColumn"></th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="row in rows">
                 <td v-for="column in row.columns" :class="column.class" :id="column.id" v-html="column.data"></td>
-                <td class="td-fit text-right pr-6">
+                <td v-if="hasViewColumn" class="td-fit text-right pr-6">
                   <span v-if="row.view">
                     <router-link
                         class="cursor-pointer text-70 hover:text-primary mr-3"
@@ -42,6 +42,12 @@
 <script>
 export default {
     props: ['card'],
+
+    computed: {
+      hasViewColumn() {
+        return this.rows.filter(row => row.view).length > 0;
+      },
+    },
 
     data() {
       return {
