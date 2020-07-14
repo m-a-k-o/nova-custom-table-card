@@ -57,11 +57,6 @@ class CustomTableCard extends Card
             })->toArray();
     }
 
-    public function refresh(int $seconds)
-    {
-        return $this->withMeta(['refresh' => $seconds, 'uuid' => self::$instanceCount]);
-    }
-
     function __destruct() {
         self::$instanceCount--;
     }

@@ -5,7 +5,7 @@
           <table cellpadding="0" cellspacing="0" data-testid="resource-table" class="table w-full">
             <thead v-if="header && header.length > 0">
               <tr>
-                <th :class="head.class" :id="head.id" v-for="head in header">
+                <th v-for="(head, index) in header" :key="index" :class="head.class" :id="head.id">
                   <span class="cursor-pointer inline-flex items-center">
                     {{ head.data }}
                   </span>
@@ -14,8 +14,8 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="row in rows">
-                <td v-for="column in row.columns" :class="column.class" :id="column.id" v-html="column.data"></td>
+              <tr v-for="(row, index) in rows" :key="index">
+                <td v-for="(column, index) in row.columns" :key="index"  :class="column.class" :id="column.id" v-html="column.data"></td>
                 <td v-if="hasViewColumn" class="td-fit text-right pr-6">
                   <span v-if="row.view">
                     <router-link
@@ -45,37 +45,37 @@ export default {
 
     computed: {
       hasViewColumn() {
-        return this.rows.filter(row => row.view).length > 0;
+          return this.rows.find((row) => row.view)
       },
     },
 
     data() {
-      return {
-        rows: [],
-        header: [],
-        title: '',
-        viewall: false
-      }
+        return {
+            rows: [],
+            header: [],
+            title: '',
+            viewall: false,
+        }
     },
 
     mounted() {
-      const { header, rows, title, refresh, uuid, viewall } = this.card
+        this.fillTableData(this.card)
+    },
 
-      this.rows = rows;
-      this.header = header;
-      this.title = title;
-      this.viewall = viewall;
+    methods: {
+        fillTableData(card) {
+            this.rows = card.rows;
+            this.header = card.header;
+            this.title = card.title;
+            this.viewall = card.viewall;
+        }
+    },
 
-      if (refresh) {
-        setInterval(() => {
-          Nova.request().get('/nova-api/cards')
-            .then(({ data }) => {
-              const card = data.find((value) => value.uuid === uuid)
-
-              this.rows = card.rows
-            })
-        }, refresh * 1000)
-      }
+    watch: {
+        card(value) {
+            // Fix problem with dashboard caching 🤷‍♂️
+            this.fillTableData(value)
+        }
     }
 }
 </script>
