@@ -10,6 +10,7 @@ It can be useful as latest order list or latest posts, ...
 
  ## This docs are only for v. > 2.*
  In version 2 added: refresh (reload), possiblity to add id and classes to cells
+
  In version 3: **REMOVED refresh**, fixed problem with multiple dashboards
 
  ## Installation
