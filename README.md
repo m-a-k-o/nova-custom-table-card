@@ -8,8 +8,9 @@ It can be useful as latest order list or latest posts, ...
 
 ![Nova Custom Table Card](https://raw.githubusercontent.com/m-a-k-o/nova-custom-table-card/master/screenshot.png)
 
- ## This docs are only for v. 2.*
- In version 2 added: refresh (reaload), possiblity to add id and classes to cells
+ ## This docs are only for v. > 2.*
+ In version 2 added: refresh (reload), possiblity to add id and classes to cells
+ In version 3: **REMOVED refresh**, fixed problem with multiple dashboards
 
  ## Installation
 
@@ -96,8 +97,7 @@ public function cards()
                 )),
             ])
             ->title('Orders')
-            ->viewall(['label' => 'View All', 'link' => '/resources/orders'])
-            ->refresh(5), // If you need refresh your card data (in seconds)
+            ->viewall(['label' => 'View All', 'link' => '/resources/orders']),
     ];
 }
 ```
@@ -122,7 +122,6 @@ class LatestOrders extends \Mako\CustomTableCard\CustomTableCard
         $header = collect(['Date', 'Order Number', 'Status', 'Price', 'Name']);
 
         $this->title('Latest Orders');
-        $this->refresh(5); // If you need refresh your card data (in seconds)
         $this->viewall(['label' => 'View All', 'link' => '/resources/orders']);
 
         // $orders = Order::all();
@@ -165,5 +164,3 @@ protected function cards()
 ```
 
 Note: If you don't specify view or view all, show icon will not be visible.
-
-
