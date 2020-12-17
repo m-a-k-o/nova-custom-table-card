@@ -2,7 +2,7 @@
     <div>
         <card class="flex flex-col">
           <h1 v-if="title" class="py-6 text-90 font-normal text-2xl text-left pl-4">{{ title }}</h1>
-          <table cellpadding="0" cellspacing="0" data-testid="resource-table" class="table w-full">
+          <table cellpadding="0" cellspacing="0" data-testid="resource-table" class="table w-1/2">
             <thead v-if="header && header.length > 0">
               <tr>
                 <th v-for="(head, index) in header" :key="index" :class="head.class" :id="head.id">
