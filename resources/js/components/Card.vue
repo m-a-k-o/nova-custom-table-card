@@ -1,5 +1,5 @@
 <template>
-  <card class="flex flex-col nova-custom-table-card">
+  <card class="flex flex-col h-auto">
     <h1 v-if="title" class="py-6 text-90 font-normal text-2xl text-left pl-4">{{ title }}</h1>
     <table cellpadding="0" cellspacing="0" data-testid="resource-table" class="table w-full">
       <thead v-if="header && header.length > 0">
