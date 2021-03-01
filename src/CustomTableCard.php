@@ -3,9 +3,12 @@
 namespace Mako\CustomTableCard;
 
 use Laravel\Nova\Card;
+use Laravel\Nova\Makeable;
 
 class CustomTableCard extends Card
 {
+    use Makeable;
+
     public static $instanceCount = 0;
 
     /**

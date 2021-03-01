@@ -2,10 +2,13 @@
 
 namespace Mako\CustomTableCard\Table;
 
+use Laravel\Nova\Makeable;
 use Mako\CustomTableCard\ToArrayInterface;
 
 class Cell implements ToArrayInterface
 {
+    use Makeable;
+
     public $data;
 
     public $classes = null;
