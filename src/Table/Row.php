@@ -13,6 +13,8 @@ class Row implements ToArrayInterface
 
     public $viewLink;
 
+    public $classes = [];
+
     public function __construct(...$columns)
     {
         foreach($columns as $column) {
@@ -27,10 +29,18 @@ class Row implements ToArrayInterface
         return $this;
     }
 
+    public function class(string $class): Row
+    {
+        $this->classes[] = $class;
+
+        return $this;
+    }
+
     public function toArray() : array
     {
         return [
             'columns'   =>  $this->columns,
+            'class'     =>  implode(' ', $this->classes),
             'view'      =>  $this->viewLink,
         ];
     }

@@ -13,7 +13,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(row, index) in rows" :key="index">
+        <tr v-for="(row, index) in rows" :key="index" :class="row.class">
           <td v-for="(column, index) in row.columns" :key="index"  :class="column.class" :id="column.id" v-html="column.data"></td>
           <td v-if="hasViewColumn" class="td-fit text-right pr-6">
             <span v-if="row.view">
