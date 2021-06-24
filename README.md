@@ -53,7 +53,8 @@ public function cards()
         new \Mako\CustomTableCard\CustomTableCard(
             [
                 new \Mako\CustomTableCard\Table\Cell('Order Number'),
-                (new \Mako\CustomTableCard\Table\Cell('Price'))->class('text-right'),
+                // Set sortable to true in a header Cell to allow its column's sorting
+                (new \Mako\CustomTableCard\Table\Cell('Price'))->sortable(true)->class('text-right'),
             ], // header
             [
                 (new \Mako\CustomTableCard\Table\Row(
@@ -85,7 +86,8 @@ public function cards()
         (new \Mako\CustomTableCard\CustomTableCard)
             ->header([
                 new \Mako\CustomTableCard\Table\Cell('Order Number'),
-                (new \Mako\CustomTableCard\Table\Cell('Price'))->class('text-right'),
+                // Set sortable to true in a header Cell to allow its column's sorting
+                (new \Mako\CustomTableCard\Table\Cell('Price'))->sortable(true)->class('text-right'),
             ])
             ->data([
                 (new \Mako\CustomTableCard\Table\Row(
