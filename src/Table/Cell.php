@@ -17,6 +17,8 @@ class Cell implements ToArrayInterface
 
     public $sortable = false;
 
+    public $sortableData = null;
+
     public function __construct($data)
     {
         $this->data = $data;
@@ -43,6 +45,13 @@ class Cell implements ToArrayInterface
         return $this;
     }
 
+    public function sortableData($data) : Cell
+    {
+        $this->sortableData = $data;
+
+        return $this;
+    }
+
     public function toArray() : array
     {
         return [
@@ -50,6 +59,7 @@ class Cell implements ToArrayInterface
             'class'     =>  implode(' ', $this->classes ?? ['text-left']),
             'id'        =>  $this->id,
             'sortable'  =>  $this->sortable,
+            'sortableData'  =>  $this->sortableData,
         ];
     }
 }

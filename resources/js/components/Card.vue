@@ -68,10 +68,17 @@ export default {
 
       orderedRows() {
           const colIndex = this.header.findIndex( (e) => (this.orderBy === this.slugify(e.data))) || 0
+          
           if (colIndex === -1) return this.rows
+
           return this.rows.sort((a, b) => {
-              const termA = this.orderByDirection === 'desc' ? b.columns[colIndex].data : a.columns[colIndex].data
-              const termB = this.orderByDirection === 'desc' ? a.columns[colIndex].data : b.columns[colIndex].data
+              const termA = this.orderByDirection === 'desc' ?
+                (b.columns[colIndex].sortableData || b.columns[colIndex].data) :
+                (a.columns[colIndex].sortableData || a.columns[colIndex].data)
+              const termB = this.orderByDirection === 'desc' ?
+                (a.columns[colIndex].sortableData || a.columns[colIndex].data) :
+                (b.columns[colIndex].sortableData || b.columns[colIndex].data)
+
               return ( termA > termB) ? -1 : ( (termB > termA) ? 1 : 0 )
           })
       },
