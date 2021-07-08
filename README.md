@@ -53,7 +53,8 @@ public function cards()
         new \Mako\CustomTableCard\CustomTableCard(
             [
                 new \Mako\CustomTableCard\Table\Cell('Order Number'),
-                (new \Mako\CustomTableCard\Table\Cell('Price'))->class('text-right'),
+                // Set sortable to true in a header Cell to allow its column's sorting
+                (new \Mako\CustomTableCard\Table\Cell('Price'))->sortable(true)->class('text-right'),
             ], // header
             [
                 (new \Mako\CustomTableCard\Table\Row(
@@ -85,7 +86,8 @@ public function cards()
         (new \Mako\CustomTableCard\CustomTableCard)
             ->header([
                 new \Mako\CustomTableCard\Table\Cell('Order Number'),
-                (new \Mako\CustomTableCard\Table\Cell('Price'))->class('text-right'),
+                // Set sortable to true in a header Cell to allow its column's sorting
+                (new \Mako\CustomTableCard\Table\Cell('Price'))->sortable(true)->class('text-right'),
             ])
             ->data([
                 (new \Mako\CustomTableCard\Table\Row(
@@ -137,18 +139,32 @@ class LatestOrders extends \Mako\CustomTableCard\CustomTableCard
         ]);
 
         $this->header($header->map(function($value) {
-            return new \Mako\CustomTableCard\Table\Cell($value);
+            // Make the Status column sortable
+            return ($value === 'Status') ?
+                (new \Mako\CustomTableCard\Table\Cell($value))->sortable(true) :
+                new \Mako\CustomTableCard\Table\Cell($value);
         })->toArray());
 
         $this->data($orders->map(function($order) {
             return new \Mako\CustomTableCard\Table\Row(
                 new \Mako\CustomTableCard\Table\Cell($order['date']),
                 new \Mako\CustomTableCard\Table\Cell($order['order_number']),
-                new \Mako\CustomTableCard\Table\Cell($order['status']),
+                // Instead of alphabetically ordering the status, set a sortableData value for better representation
+                (new \Mako\CustomTableCard\Table\Cell($order['status'])->sortableData($this->getStatusSortableData($order['status']))),
                 new \Mako\CustomTableCard\Table\Cell($order['price']),
                 new \Mako\CustomTableCard\Table\Cell($order['name'])
             );
         })->toArray());
+    }
+
+    private function getStatusSortableData (string $status) : int
+    {
+        switch ($status) {
+            case 'Ordered':
+                return 1;            
+            default:
+                return 0.
+        } 
     }
 }
 ```
