@@ -1,7 +1,11 @@
 <template>
   <card class="flex flex-col h-auto">
     <h1 v-if="title" class="py-6 text-90 font-normal text-2xl text-left pl-4">{{ title }}</h1>
-    <table cellpadding="0" cellspacing="0" data-testid="resource-table" class="table w-full">
+    <table
+      class="table w-full"
+      :class="`table-${card.style}`"
+      data-testid="resource-table"
+    >
       <thead v-if="header && header.length > 0">
         <tr>
           <th v-for="(head, index) in header" :key="index" :class="head.class" :id="head.id">
@@ -68,7 +72,7 @@ export default {
 
       orderedRows() {
           const colIndex = this.header.findIndex( (e) => (this.orderBy === this.slugify(e.data))) || 0
-          
+
           if (colIndex === -1) return this.rows
 
           return this.rows.sort((a, b) => {
