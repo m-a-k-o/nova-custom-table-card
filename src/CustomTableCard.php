@@ -4,12 +4,20 @@ namespace Mako\CustomTableCard;
 
 use Laravel\Nova\Card;
 use Laravel\Nova\Makeable;
+use function in_array;
 
 class CustomTableCard extends Card
 {
     use Makeable;
 
     public static $instanceCount = 0;
+
+    /**
+     * The visual style used for the table. Available options are 'tight' and 'default'.
+     *
+     * @var string
+     */
+    public $style = 'default';
 
     /**
      * The width of the card (1/3, 1/2, or full).
@@ -72,5 +80,21 @@ class CustomTableCard extends Card
     public function component()
     {
         return 'custom-table-card';
+    }
+
+    public function style(string $style): CustomTableCard
+    {
+        if (in_array($style, ['default', 'tight'])) {
+            $this->style = $style;
+        }
+
+        return $this;
+    }
+
+    public function jsonSerialize(): array
+    {
+        return array_merge([
+            'style' => $this->style,
+        ], parent::jsonSerialize());
     }
 }

@@ -181,3 +181,21 @@ protected function cards()
 ```
 
 Note: If you don't specify view or view all, show icon will not be visible.
+
+## Table Style Customization
+To show more data on your table, you can use the "tight" table style option designed to increase the visual density of your table rows.
+```php
+protected function cards()
+{
+    return [
+        ...
+        \Mako\CustomTableCard\CustomTableCard::make(
+            ...
+        )->style('tight'),
+     ];
+ }
+```
+Or override the `$style` property on your custom class:
+```php
+public $style = 'tight';
+```
