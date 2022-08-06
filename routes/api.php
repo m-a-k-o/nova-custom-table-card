@@ -13,3 +13,7 @@ use Illuminate\Support\Facades\Route;
 | as many additional routes to this file as your card may require.
 |
 */
+
+// Route::get('/endpoint', function (Request $request) {
+//     //
+// });

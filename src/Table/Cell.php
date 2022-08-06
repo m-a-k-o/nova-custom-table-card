@@ -2,57 +2,57 @@
 
 namespace Mako\CustomTableCard\Table;
 
+use JsonSerializable;
 use Laravel\Nova\Makeable;
-use Mako\CustomTableCard\ToArrayInterface;
 
-class Cell implements ToArrayInterface
+class Cell implements JsonSerializable
 {
     use Makeable;
 
-    public $data;
+    public string $data;
 
-    public $classes = null;
+    public ?array $classes = null;
 
     public $id = null;
 
-    public $sortable = false;
+    public bool $sortable = false;
 
     public $sortableData = null;
 
-    public function __construct($data)
+    public function __construct(string $data)
     {
         $this->data = $data;
     }
 
-    public function class(string $class) : Cell
+    public function class(string $class): self
     {
         $this->classes[] = $class;
 
         return $this;
     }
 
-    public function id($id) : Cell
+    public function id($id): self
     {
         $this->id = $id;
 
         return $this;
     }
 
-    public function sortable(bool $bool) : Cell
+    public function sortable(bool $bool): self
     {
         $this->sortable = $bool;
 
         return $this;
     }
 
-    public function sortableData($data) : Cell
+    public function sortableData($data): self
     {
         $this->sortableData = $data;
 
         return $this;
     }
 
-    public function toArray() : array
+    public function jsonSerialize()
     {
         return [
             'data'      =>  $this->data,
