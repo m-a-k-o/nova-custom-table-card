@@ -1,6 +1,6 @@
 <template>
-    <card id="custom-table" class="flex flex-col h-auto overflow-x-auto">
-        <h1 v-if="title" class="py-3 text-90 font-normal text-2xl text-left pl-4">{{ title }}</h1>
+    <div class="overflow-x-auto bg-white dark:bg-gray-800 rounded-lg shadow h-full pt-4">
+        <h1 v-if="title" class="h-6 flex mb-3 text-sm font-bold px-6">{{ title }}</h1>
         <table
             class="w-full"
             :class="card.style"
@@ -22,23 +22,25 @@
                 />
             </tbody>
         </table>
-        <div v-if="viewAll && viewAll.label" class="bg-20 rounded-b-lg flex justify-between">
-            <div></div>
+        <div v-if="viewAll && viewAll.label" class="w-full border-t border-gray-200 dark:border-gray-700 rounded-b-lg flex justify-center py-3">
             <div>
-                <a class="btn btn-link py-3 px-4 text-80" :href="viewAll.link">{{ viewAll.label }}</a>
+                <a class="text-primary-200 text-xs hover:text-primary-600" :href="viewAll.link">{{ viewAll.label }}</a>
             </div>
         </div>
-    </card>
+    </div>
 </template>
 
 <script>
-import TableHeader from './TableHeader';
-import TableRow from './TableRow';
+import TableHeader from './TableHeader'
+import TableRow from './TableRow'
 
 export default {
     props: ['card'],
 
-    components: {TableRow, TableHeader },
+    components: {
+        TableRow,
+        TableHeader
+    },
 
     computed: {
         hasViewColumn() {
@@ -53,7 +55,7 @@ export default {
          * Determine if the resource table should show column borders.
          */
         shouldShowColumnBorders() {
-            return this.card.showBorders;
+            return !! this.card.showBorders
         },
     },
 
@@ -67,17 +69,18 @@ export default {
     },
 
     mounted() {
+        console.log(this.card)
         this.fillTableData(this.card)
 
-        this.$refs['table'].parentNode.classList.remove('min-h-40')
+        // this.$refs['table'].parentNode.classList.remove('min-h-40')
     },
 
     methods: {
         fillTableData(card) {
-            this.rows = card.rows;
-            this.header = card.header;
-            this.title = card.title;
-            this.viewAll = card.viewAll;
+            this.rows = card.rows
+            this.header = card.header
+            this.title = card.title
+            this.viewAll = card.viewAll
         }
     },
 
@@ -89,14 +92,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-#custom-table::-webkit-scrollbar {
-    height: 8px;
-    border-radius: 4px;
-}
-
-#custom-table::-webkit-scrollbar-thumb {
-    background: #cacaca;
-}
-</style>

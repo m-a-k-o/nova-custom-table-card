@@ -8,10 +8,10 @@
             :class="{
                 [`${head.class}`]: true,
                 'border-r border-gray-200 dark:border-gray-600': shouldShowColumnBorders,
-                'px-2': true,
-                'whitespace-nowrap': true,
+                // 'px-2': true,
+                // 'whitespace-nowrap': true,
             }"
-            class="text-gray-500 text-xxs tracking-wide py-2"
+            class="td-fit uppercase text-xxs text-gray-500 tracking-wide pl-5 pr-2 py-2"
         >
             <span>
               {{ head.data }}
@@ -35,7 +35,3 @@ export default {
     },
 }
 </script>
-
-<style scoped>
-
-</style>

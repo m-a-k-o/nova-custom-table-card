@@ -26,16 +26,16 @@ class CustomTableCard extends Card
      * @param string $title
      * @param bool|array $viewAll
      */
-    public function __construct(array $header = [], array $data = [], string $title = '', $viewAll = false)
+    public function __construct(array $header = [], array $data = [], string $title = '', bool $viewAll = false)
     {
         parent::__construct();
 
         $this->withMeta([
-            'header'    =>  $header,
-            'rows'      =>  $data,
-            'title'     =>  $title,
-            'viewAll'   =>  $viewAll,
-            'showBorders'=> false,
+            'header' =>  $header,
+            'rows' =>  $data,
+            'title' =>  $title,
+            'viewAll' =>  $viewAll,
+            'showBorders' => false,
         ]);
     }
 
