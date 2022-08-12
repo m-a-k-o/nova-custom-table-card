@@ -42,6 +42,15 @@ export default {
         TableHeader
     },
 
+    data() {
+        return {
+            rows: [],
+            header: [],
+            title: '',
+            viewAll: false,
+        }
+    },
+
     computed: {
         hasViewColumn() {
             return this.rows.find((row) => row.view)
@@ -57,15 +66,6 @@ export default {
         shouldShowColumnBorders() {
             return !! this.card.showBorders
         },
-    },
-
-    data() {
-        return {
-            rows: [],
-            header: [],
-            title: '',
-            viewAll: false,
-        }
     },
 
     mounted() {

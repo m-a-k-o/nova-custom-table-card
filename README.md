@@ -13,6 +13,8 @@ It can be useful as latest order list or latest posts, ...
 
  In version 3: **REMOVED refresh**, fixed problem with multiple dashboards
 
+Version 4: Add compatibility for Nova v. 4
+
  ## Installation
 
 You can install the package in to a Laravel app that uses [Nova](https://nova.laravel.com) via composer:
