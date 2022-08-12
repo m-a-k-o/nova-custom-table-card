@@ -1,3 +1,5 @@
-Nova.booting((Vue, router) => {
-    Vue.component('custom-table-card', require('./components/Card'));
+import Card from './components/Card'
+
+Nova.booting((app, store) => {
+  app.component('nova-custom-table-card', Card)
 })

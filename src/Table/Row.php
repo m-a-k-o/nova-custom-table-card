@@ -2,41 +2,41 @@
 
 namespace Mako\CustomTableCard\Table;
 
+use JsonSerializable;
 use Laravel\Nova\Makeable;
-use Mako\CustomTableCard\ToArrayInterface;
 
-class Row implements ToArrayInterface
+class Row implements JsonSerializable
 {
     use Makeable;
 
-    public $columns;
+    public array $columns;
 
-    public $viewLink;
+    public ?string $viewLink = null;
 
-    public $classes = [];
+    public array $classes = [];
 
     public function __construct(...$columns)
     {
         foreach($columns as $column) {
-            $this->columns[] = $column->toArray();
+            $this->columns[] = $column;
         }
     }
 
-    public function viewLink(string $link) : Row
+    public function viewLink(string $link): self
     {
         $this->viewLink = $link;
 
         return $this;
     }
 
-    public function class(string $class): Row
+    public function class(string $class): self
     {
         $this->classes[] = $class;
 
         return $this;
     }
 
-    public function toArray() : array
+    public function jsonSerialize()
     {
         return [
             'columns'   =>  $this->columns,

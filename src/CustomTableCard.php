@@ -3,21 +3,15 @@
 namespace Mako\CustomTableCard;
 
 use Laravel\Nova\Card;
-use Laravel\Nova\Makeable;
-use function in_array;
 
 class CustomTableCard extends Card
 {
-    use Makeable;
-
-    public static $instanceCount = 0;
-
     /**
      * The visual style used for the table. Available options are 'tight' and 'default'.
      *
      * @var string
      */
-    public $style = 'default';
+    public string $style = 'table-default';
 
     /**
      * The width of the card (1/3, 1/2, or full).
@@ -26,50 +20,43 @@ class CustomTableCard extends Card
      */
     public $width = 'full';
 
-    public function __construct(array $header = [], array $data = [], string $title = '', array $viewall = [])
+    /**
+     * @param array $header
+     * @param array $data
+     * @param string $title
+     * @param bool|array $viewAll
+     */
+    public function __construct(array $header = [], array $data = [], string $title = '', $viewAll = false)
     {
         parent::__construct();
 
-        self::$instanceCount++;
-
         $this->withMeta([
-            'header'    =>  $this->_convertToArray($header),
-            'rows'      =>  $this->_convertToArray($data),
+            'header'    =>  $header,
+            'rows'      =>  $data,
             'title'     =>  $title,
-            'viewall'   =>  $viewall,
+            'viewAll'   =>  $viewAll,
+            'showBorders'=> false,
         ]);
     }
 
-    public function header(array $header)
+    public function header(array $header): self
     {
-        return $this->withMeta(['header' => $this->_convertToArray($header)]);
+        return $this->withMeta(['header' => $header]);
     }
 
-    public function data(array $data)
+    public function data(array $data): self
     {
-        return $this->withMeta(['rows' => $this->_convertToArray($data)]);
+        return $this->withMeta(['rows' => $data]);
     }
 
-    public function title(string $title)
+    public function title(string $title): self
     {
         return $this->withMeta(['title' => $title]);
     }
 
-    public function viewall(array $viewall)
+    public function viewAll(array $viewAll): self
     {
-        return $this->withMeta(['viewall' => $viewall]);
-    }
-
-    private function _convertToArray(array $data) : array
-    {
-        return collect($data)
-            ->map(function ($value) {
-                return $value->toArray();
-            })->toArray();
-    }
-
-    function __destruct() {
-        self::$instanceCount--;
+        return $this->withMeta(['viewAll' => $viewAll]);
     }
 
     /**
@@ -79,20 +66,29 @@ class CustomTableCard extends Card
      */
     public function component()
     {
-        return 'custom-table-card';
+        return 'nova-custom-table-card';
     }
 
-    public function style(string $style): CustomTableCard
+    public function style(string $style): self
     {
         if (in_array($style, ['default', 'tight'])) {
-            $this->style = $style;
+            $this->style = 'table-' . $style;
         }
 
         return $this;
     }
 
+    public function showBorders(bool $show): self
+    {
+        return $this->withMeta(['showBorders' => $show]);
+    }
+
     public function jsonSerialize(): array
     {
+        if (method_exists($this, 'fillTableData')) {
+            $this->fillTableData();
+        }
+
         return array_merge([
             'style' => $this->style,
         ], parent::jsonSerialize());

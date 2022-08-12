@@ -34,7 +34,7 @@ public function cards()
 
         // all the parameters are required excelpt title
         new \Mako\CustomTableCard\CustomTableCard(
-            array $header, array $data, string $title, array $viewall
+            array $header, array $data, string $title, array $viewAll
         ),
     ];
 }
@@ -100,7 +100,7 @@ public function cards()
                 )),
             ])
             ->title('Orders')
-            ->viewall(['label' => 'View All', 'link' => '/resources/orders']),
+            ->viewAll(['label' => 'View All', 'link' => '/resources/orders']),
     ];
 }
 ```
@@ -125,7 +125,7 @@ class LatestOrders extends \Mako\CustomTableCard\CustomTableCard
         $header = collect(['Date', 'Order Number', 'Status', 'Price', 'Name']);
 
         $this->title('Latest Orders');
-        $this->viewall(['label' => 'View All', 'link' => '/resources/orders']);
+        $this->viewAll(['label' => 'View All', 'link' => '/resources/orders']);
 
         // $orders = Order::all();
         // Data from you model
