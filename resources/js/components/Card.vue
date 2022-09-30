@@ -27,23 +27,19 @@
                 <a class="text-primary-200 text-xs hover:text-primary-600" :href="viewAll.link">{{ viewAll.label }}</a>
             </div>
         </div>
-
-        <!-- <Pagination :config="config" :paginator="paginator"></Pagination> -->
     </div>
 </template>
 
 <script>
-import TableHeader from './TableHeader.vue';
-import TableRow from './TableRow.vue';
-// import Pagination from './Pagination.vue';
+import TableHeader from './TableHeader'
+import TableRow from './TableRow'
 
 export default {
     props: ['card'],
 
     components: {
         TableRow,
-        TableHeader,
-        // Pagination
+        TableHeader
     },
 
     data() {
@@ -52,8 +48,6 @@ export default {
             header: [],
             title: '',
             viewAll: false,
-            paginator: null,
-            config: [],
         }
     },
 
@@ -73,14 +67,28 @@ export default {
             return !! this.card.showBorders
         },
     },
-    created () {
-		const {header, rows, title, paginator, config} = this.card;
 
-		this.rows = rows;
-		this.header = header;
-		this.title = title;
-        this.paginator = paginator;
-		this.config = config;
-	},
+    mounted() {
+        console.log(this.card)
+        this.fillTableData(this.card)
+
+        // this.$refs['table'].parentNode.classList.remove('min-h-40')
+    },
+
+    methods: {
+        fillTableData(card) {
+            this.rows = card.rows
+            this.header = card.header
+            this.title = card.title
+            this.viewAll = card.viewAll
+        }
+    },
+
+    watch: {
+        card(value) {
+            // Fix problem with dashboard caching 🤷‍♂️
+            this.fillTableData(value)
+        }
+    }
 }
 </script>

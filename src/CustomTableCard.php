@@ -2,13 +2,10 @@
 
 namespace Mako\CustomTableCard;
 
-use Illuminate\Pagination\LengthAwarePaginator;
 use Laravel\Nova\Card;
 
 class CustomTableCard extends Card
 {
-    public static $instanceCount = 0;
-
     /**
      * The visual style used for the table. Available options are 'tight' and 'default'.
      *
@@ -33,8 +30,6 @@ class CustomTableCard extends Card
     {
         parent::__construct();
 
-        self::$instanceCount++;
-
         $this->withMeta([
             'header' =>  $header,
             'rows' =>  $data,
@@ -44,44 +39,25 @@ class CustomTableCard extends Card
         ]);
     }
 
-    public function header(array $header)
+    public function header(array $header): self
     {
         return $this->withMeta(['header' => $header]);
     }
 
-    public function data(array $data)
+    public function data(array $data): self
     {
         return $this->withMeta(['rows' => $data]);
     }
 
-    public function title(string $title)
+    public function title(string $title): self
     {
         return $this->withMeta(['title' => $title]);
     }
 
-    public function viewAll(array $viewAll)
-    {  
+    public function viewAll(array $viewAll): self
+    {
         return $this->withMeta(['viewAll' => $viewAll]);
     }
-
-    public function paginator(LengthAwarePaginator $paginator)
-	{
-		return $this->withMeta([
-			'paginator' => $paginator,
-		]);
-	}
-
-    public function configValues(array $config = [])
-	{
-		return $this->withMeta([
-			'config' => $config,
-		]);
-	}
-
-    function __destruct()
-	{
-		self::$instanceCount--;
-	}
 
     /**
      * Get the component name for the element.
@@ -93,7 +69,7 @@ class CustomTableCard extends Card
         return 'nova-custom-table-card';
     }
 
-    public function style(string $style)
+    public function style(string $style): self
     {
         if (in_array($style, ['default', 'tight'])) {
             $this->style = 'table-' . $style;
@@ -102,7 +78,7 @@ class CustomTableCard extends Card
         return $this;
     }
 
-    public function showBorders(bool $show)
+    public function showBorders(bool $show): self
     {
         return $this->withMeta(['showBorders' => $show]);
     }

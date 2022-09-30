@@ -14,8 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-foreach (config('custom-table-card.apis') as $key => $value) {
-	foreach ($value['routes'] as $routeKey => $routeParams) {
-		Route::get($routeParams['url'], $routeParams['action']);
-	}
-}
+// Route::get('/endpoint', function (Request $request) {
+//     //
+// });
