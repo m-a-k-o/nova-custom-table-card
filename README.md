@@ -45,6 +45,7 @@ public function cards()
 Example of use:
 
 ```php
+use Mako\CustomTableCard\CustomTableCard;
 use Mako\CustomTableCard\Table\Cell;
 use Mako\CustomTableCard\Table\Row;
 
@@ -54,44 +55,8 @@ public function cards()
     return [
         // ...
 
-        // all the parameters are required
-        new \Mako\CustomTableCard\CustomTableCard(
-            [
-               Cell::make('Order Number'),
-                // Set sortable to true in a header Cell to allow its column's sorting
-                (Cell::make('Price'))->sortable(true)->class('text-right'),
-            ], // header
-            [
-                (Row::make(
-                    Cell::make('2018091001'),
-                    (Cell::make'20.50'))->class('text-right')->id('price-2')
-                ))->viewLink('/resources/orders/1'), //Add viewLink to show clickable eye
-                (Row::make(
-                    Cell::make('2018091002'),
-                    (Cell::make('201.25'))->class('text-right')->id('price-2')
-                )),
-            ], // data
-            'Orders,' // title
-            ['label' => 'View All', 'link' => '/resources/orders'], // View All
-        ),
-    ];
-}
-```
-
-or:
-
-```php
-use Mako\CustomTableCard\Table\Cell;
-use Mako\CustomTableCard\Table\Row;
-
-// ...
-public function cards()
-{
-    return [
-        // ...
-
-        // all the parameters are required except title
-        (new \Mako\CustomTableCard\CustomTableCard)
+        // all the parameters are required except title and/or viewLink 
+        (new CustomTableCard)
             ->header([
                 Cell::make('Order Number'),
                 // Set sortable to true in a header Cell to allow its column's sorting
