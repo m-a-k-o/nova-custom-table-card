@@ -17,7 +17,7 @@
               {{ head.data }}
             </span>
         </th>
-        <th v-if="hasViewColumn"></th>
+        <th v-if="hasViewColumn" class="d-fit text-center"></th>
     </tr>
     </thead>
 </template>
