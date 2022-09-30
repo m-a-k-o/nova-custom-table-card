@@ -165,11 +165,13 @@ You can also show a viewAll on the table with `$this->viewAll()`
 ## Table Style Customization
 To show more data on your table, you can use the "tight" table style option designed to increase the visual density of your table rows.
 ```php
+use Mako\CustomTableCard\CustomTableCard;
+
 protected function cards()
 {
     return [
         ...
-        \Mako\CustomTableCard\CustomTableCard::make(
+        CustomTableCard::make(
             ...
         )->style('tight'),
      ];
@@ -178,4 +180,21 @@ protected function cards()
 Or override the `$style` property on your custom class:
 ```php
 public $style = 'tight';
+```
+
+## Using the pagination
+The pagination accepts a default `Illuminate\Pagination\LengthAwarePaginator`
+
+When getting your data just use the default `->paginate()` and pass your data to the paginator.<br>
+Everything else stays the same.
+```php
+class LatestOrders extends CustomTableCard
+{
+    public function __construct()
+    {
+        $orders = Orders::paginate(5);
+
+        $this->paginator($orders);
+    }
+}
 ```

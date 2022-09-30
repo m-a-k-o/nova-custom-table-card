@@ -1,5 +1,5 @@
 {
-    "name": "m-a-k-o/nova-custom-table-card",
+    "name": "joeri/nova-custom-table-card",
     "description": "Nova custom table card. Show your latest data (orders, posts,...) as card or data you prefer.",
     "keywords": [
         "laravel",
