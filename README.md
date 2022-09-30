@@ -45,6 +45,9 @@ public function cards()
 Example of use:
 
 ```php
+use Mako\CustomTableCard\Table\Cell;
+use Mako\CustomTableCard\Table\Row;
+
 // ...
 public function cards()
 {
@@ -54,18 +57,18 @@ public function cards()
         // all the parameters are required
         new \Mako\CustomTableCard\CustomTableCard(
             [
-                new \Mako\CustomTableCard\Table\Cell('Order Number'),
+               Cell::make('Order Number'),
                 // Set sortable to true in a header Cell to allow its column's sorting
-                (new \Mako\CustomTableCard\Table\Cell('Price'))->sortable(true)->class('text-right'),
+                (Cell::make('Price'))->sortable(true)->class('text-right'),
             ], // header
             [
-                (new \Mako\CustomTableCard\Table\Row(
-                    new \Mako\CustomTableCard\Table\Cell('2018091001'),
-                    (new \Mako\CustomTableCard\Table\Cell('20.50'))->class('text-right')->id('price-2')
-                ))->viewLink('/resources/orders/1'),
-                (new \Mako\CustomTableCard\Table\Row(
-                    new \Mako\CustomTableCard\Table\Cell('2018091002'),
-                    (new \Mako\CustomTableCard\Table\Cell('201.25'))->class('text-right')->id('price-2')
+                (Row::make(
+                    Cell::make('2018091001'),
+                    (Cell::make'20.50'))->class('text-right')->id('price-2')
+                ))->viewLink('/resources/orders/1'), //Add viewLink to show clickable eye
+                (Row::make(
+                    Cell::make('2018091002'),
+                    (Cell::make('201.25'))->class('text-right')->id('price-2')
                 )),
             ], // data
             'Orders,' // title
@@ -78,6 +81,9 @@ public function cards()
 or:
 
 ```php
+use Mako\CustomTableCard\Table\Cell;
+use Mako\CustomTableCard\Table\Row;
+
 // ...
 public function cards()
 {
@@ -87,18 +93,18 @@ public function cards()
         // all the parameters are required except title
         (new \Mako\CustomTableCard\CustomTableCard)
             ->header([
-                new \Mako\CustomTableCard\Table\Cell('Order Number'),
+                Cell::make('Order Number'),
                 // Set sortable to true in a header Cell to allow its column's sorting
-                (new \Mako\CustomTableCard\Table\Cell('Price'))->sortable(true)->class('text-right'),
+                (Cell::make('Price'))->sortable(true)->class('text-right'),
             ])
             ->data([
-                (new \Mako\CustomTableCard\Table\Row(
-                    new \Mako\CustomTableCard\Table\Cell('2018091001'),
-                    (new \Mako\CustomTableCard\Table\Cell('20.50'))->class('text-right')->id('price-2')
-                ))->viewLink('/resources/orders/1'),
-                (new \Mako\CustomTableCard\Table\Row(
-                    new \Mako\CustomTableCard\Table\Cell('2018091002'),
-                    (new \Mako\CustomTableCard\Table\Cell('201.25'))->class('text-right')->id('price-2')
+                (Row::make(
+                    Cell::make('2018091001'),
+                    (Cell::make('20.50'))->class('text-right')->id('price-2')
+                ))->viewLink('/resources/orders/1'), //Add viewLink to show clickable eye
+                (Row::make(
+                    Cell::make('2018091002'),
+                    (Cell::make('201.25'))->class('text-right')->id('price-2')
                 )),
             ])
             ->title('Orders')
@@ -118,9 +124,13 @@ In this separate class you are able to fetch data from models in nice clean way.
 
 namespace App\Nova\Cards;
 
+use Mako\CustomTableCard\CustomTableCard;
+use Mako\CustomTableCard\Table\Cell;
+use Mako\CustomTableCard\Table\Row;
+
 use App\Models\Order;
 
-class LatestOrders extends \Mako\CustomTableCard\CustomTableCard
+class LatestOrders extends CustomTableCard
 {
     public function __construct()
     {
@@ -129,7 +139,7 @@ class LatestOrders extends \Mako\CustomTableCard\CustomTableCard
         $this->title('Latest Orders');
         $this->viewAll(['label' => 'View All', 'link' => '/resources/orders']);
 
-        // $orders = Order::all();
+        // $orders = Order::take(10)->latest->get();
         // Data from you model
         $orders = collect([
             ['date' => '2018-12-01', 'order_number' => '2018120101', 'status' => 'Ordered', 'price' => '20.55', 'name' => 'John Doe'],
@@ -143,18 +153,18 @@ class LatestOrders extends \Mako\CustomTableCard\CustomTableCard
         $this->header($header->map(function($value) {
             // Make the Status column sortable
             return ($value === 'Status') ?
-                (new \Mako\CustomTableCard\Table\Cell($value))->sortable(true) :
-                new \Mako\CustomTableCard\Table\Cell($value);
+                (Cell::make($value))->sortable(true) :
+                Cell::make($value);
         })->toArray());
 
         $this->data($orders->map(function($order) {
-            return new \Mako\CustomTableCard\Table\Row(
-                new \Mako\CustomTableCard\Table\Cell($order['date']),
-                new \Mako\CustomTableCard\Table\Cell($order['order_number']),
+            return Row::make(
+                Cell::make($order['date']),
+                Cell::make($order['order_number']),
                 // Instead of alphabetically ordering the status, set a sortableData value for better representation
-                (new \Mako\CustomTableCard\Table\Cell($order['status'])->sortableData($this->getStatusSortableData($order['status']))),
-                new \Mako\CustomTableCard\Table\Cell($order['price']),
-                new \Mako\CustomTableCard\Table\Cell($order['name'])
+                (Cell::make($order['status'])->sortableData($this->getStatusSortableData($order['status']))),
+                Cell::make($order['price']),
+                Cell::make($order['name'])
             );
         })->toArray());
     }
@@ -173,16 +183,19 @@ class LatestOrders extends \Mako\CustomTableCard\CustomTableCard
 
 Then register your custom class inside cards in NovaServiceProvider.php
 ```php
+use App\Nova\Cards\LatestOrders;
+
 protected function cards()
 {
     return [
         ......
-        new \App\Nova\Cards\LatestOrders,
+        new LatestOrders,
      ];
  }
 ```
 
-Note: If you don't specify view or view all, show icon will not be visible.
+Note: If you don't specify viewLink() on a row `Row::make()->viewLink()`, show icon will not be visible.
+You can also show a viewAll on the table with `$this->viewAll()` 
 
 ## Table Style Customization
 To show more data on your table, you can use the "tight" table style option designed to increase the visual density of your table rows.
