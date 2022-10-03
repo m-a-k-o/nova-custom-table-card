@@ -16,8 +16,6 @@ class CardServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->publishConfig();
-
         $this->app->booted(function () {
             $this->routes();
         });
@@ -27,19 +25,6 @@ class CardServiceProvider extends ServiceProvider
             //Nova::style('nova-custom-table-card', __DIR__.'/../dist/css/card.css');
         });
     }
-
-    /**
-	 * Publish config file.
-	 *
-	 * @param void
-	 * @return  void
-	 */
-	protected function publishConfig()
-	{
-		$configPath = __DIR__ . '/config/custom-table-card.php';
-
-		$this->publishes([$configPath => config_path('custom-table-card.php')], 'custom-table-card');
-	}
 
     /**
      * Register the card's routes.
@@ -54,7 +39,6 @@ class CardServiceProvider extends ServiceProvider
 
         Route::middleware(['nova'])
                 ->prefix('nova-vendor/nova-custom-table-card')
-                ->namespace(config('custom-table-card.namespace'))
                 ->group(__DIR__.'/../routes/api.php');
     }
 

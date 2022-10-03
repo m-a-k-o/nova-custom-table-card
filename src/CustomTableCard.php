@@ -71,13 +71,6 @@ class CustomTableCard extends Card
 		]);
 	}
 
-    public function configValues(array $config = [])
-	{
-		return $this->withMeta([
-			'config' => $config,
-		]);
-	}
-
     function __destruct()
 	{
 		self::$instanceCount--;

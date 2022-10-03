@@ -193,6 +193,9 @@ class LatestOrders extends CustomTableCard
     public function __construct()
     {
         $orders = Orders::paginate(5);
+        
+        //You want to start by showing the latest result? Get them by latest 
+        //$orders = Orders::latest()->paginate(5);
 
         $this->paginator($orders);
     }

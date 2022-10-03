@@ -1,9 +1,9 @@
 <template>
-    <div v-if="paginator" class="bg-20 rounded-b">
+    <div class="bg-20 rounded-b">
         <pagination-links 
             :is="paginationComponent"
             :all-matching-resource-count="allMatchingResourceCount"
-            :current-resource-count="paginator.data.length"
+            :current-resource-count="modelValue.data.length"
             :next="hasNextPage"
             :page="currentPage"
             :pages="totalPages"
@@ -28,8 +28,7 @@ import {Paginatable, PerPageable} from 'laravel-nova';
 export default {
     name: 'Pagination',
     props: {
-        config: [],
-        paginator: Object,
+        modelValue: Object,
     },
     mixins: [
 		Paginatable,
@@ -46,44 +45,48 @@ export default {
 		resourceCountLabel() {
 			const first = this.perPage * (this.currentPage - 1)
 			return (
-					this.paginator.data.length &&
-					`${first + 1}-${first + this.paginator.data.length} ${this.__('of')} ${
+					this.modelValue.data.length &&
+					`${first + 1}-${first + this.modelValue.data.length} ${this.__('of')} ${
 							this.allMatchingResourceCount
 					}`
 			)
 		},
 		currentPerPage() {
-			return this.perPage
+			return this.perPage;
 		},
 		totalPages() {
-			return Math.ceil(this.allMatchingResourceCount / this.currentPerPage)
+			return Math.ceil(this.allMatchingResourceCount / this.currentPerPage);
 		},
 		hasNextPage() {
-			return Boolean(this.paginator && this.paginator.next_page_url)
+			return this.modelValue && this.modelValue.next_page_url;
 		},
 		hasPreviousPage() {
-			return Boolean(this.paginator && this.paginator.prev_page_url)
+			return this.modelValue && this.modelValue.prev_page_url;
 		},
 		paginationComponent() {
 			return `pagination-${Nova.config['pagination'] || 'links'}`
 		},
+        path(){
+            return this.modelValue.path;
+        }
 	},
     methods: {
 		selectPage(page) {
-			this.currentPage = page
-			this.loadMore()
-		},
-		loadMore() {
-			Nova.request().get(`/nova-vendor/nova-custom-table-card${this.config.routes[0].url}`, {
+			this.currentPage = page;
+
+			Nova.request().get(this.path, {
 				params: {
 					page: this.currentPage,
 				}
 			}).then(response => {
-				this.paginator = response.data.paginator
-				this.rows = response.data.rows
-				if (this.paginator !== undefined) {
-					this.perPage = this.paginator.per_page
-					this.allMatchingResourceCount = this.paginator.total
+                const paginationCard = response.data.cards.find(card => card.component === 'nova-custom-table-card');
+
+                this.$emit('update:modelValue', paginationCard.paginator);
+                this.$emit('updateRows', paginationCard.rows);
+
+				if (paginationCard.paginator !== undefined) {
+					this.perPage = paginationCard.paginator.per_page;
+					this.allMatchingResourceCount = paginationCard.paginator.total;
 				}
 				Nova.$emit('resources-loaded')
 			}).catch(error => {
@@ -92,8 +95,8 @@ export default {
 		},
 	},
     mounted() {
-        this.allMatchingResourceCount = this.paginator.total;
-        this.perPage = this.paginator.per_page;
+        this.allMatchingResourceCount = this.modelValue.total;
+        this.perPage = this.modelValue.per_page;
     },
 }
 </script>

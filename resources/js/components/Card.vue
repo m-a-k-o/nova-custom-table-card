@@ -28,14 +28,14 @@
             </div>
         </div>
 
-        <!-- <Pagination :config="config" :paginator="paginator"></Pagination> -->
+        <Pagination v-if="paginator" v-model="paginator" @update-rows="update"></Pagination>
     </div>
 </template>
 
 <script>
 import TableHeader from './TableHeader.vue';
 import TableRow from './TableRow.vue';
-// import Pagination from './Pagination.vue';
+import Pagination from './Pagination.vue';
 
 export default {
     props: ['card'],
@@ -43,7 +43,7 @@ export default {
     components: {
         TableRow,
         TableHeader,
-        // Pagination
+        Pagination
     },
 
     data() {
@@ -53,34 +53,36 @@ export default {
             title: '',
             viewAll: false,
             paginator: null,
-            config: [],
         }
     },
-
     computed: {
         hasViewColumn() {
-            return this.rows.find((row) => row.view)
+            return this.rows.find((row) => row.view);
         },
 
         shouldShowTight() {
-            return this.card.style === 'table-tight'
+            return this.card.style === 'table-tight';
         },
 
         /**
          * Determine if the resource table should show column borders.
          */
         shouldShowColumnBorders() {
-            return !! this.card.showBorders
+            return !! this.card.showBorders;
         },
     },
+    methods: {
+        update(event){
+            this.rows = event;
+        }
+    },
     created () {
-		const {header, rows, title, paginator, config} = this.card;
+		const {header, rows, title, paginator} = this.card;
 
-		this.rows = rows;
 		this.header = header;
 		this.title = title;
+        this.rows = rows;
         this.paginator = paginator;
-		this.config = config;
 	},
 }
 </script>
