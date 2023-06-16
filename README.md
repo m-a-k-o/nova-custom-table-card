@@ -68,7 +68,7 @@ public function cards()
                     (new \Mako\CustomTableCard\Table\Cell('201.25'))->class('text-right')->id('price-2')
                 )),
             ], // data
-            'Orders,' // title
+            'Orders', // title
             ['label' => 'View All', 'link' => '/resources/orders'], // View All
         ),
     ];
